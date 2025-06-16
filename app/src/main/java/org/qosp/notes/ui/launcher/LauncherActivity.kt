@@ -25,6 +25,21 @@ class LauncherActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // If this is a sharing intent, forward it directly to MainActivity
+        if (intent?.action == Intent.ACTION_SEND || intent?.action == Intent.ACTION_SEND_MULTIPLE) {
+            val mainIntent = Intent(this, MainActivity::class.java).apply {
+                action = intent.action
+                type = intent.type
+                flags = intent.flags
+                clipData = intent.clipData
+                extras?.let { putExtras(it) }
+            }
+            startActivity(mainIntent)
+            finish()
+            return
+        }
+
         if (BuildConfig.TESTLAB_BUILD) {
             // Skip the welcome screen in Firebase TestLab builds
             lifecycleScope.launch { proceedToMainActivity(persistNewVersion = false) }

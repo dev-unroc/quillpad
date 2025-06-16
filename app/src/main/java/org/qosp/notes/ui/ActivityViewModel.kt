@@ -45,7 +45,7 @@ class ActivityViewModel @Inject constructor(
     private val reminderRepository: ReminderRepository,
     private val reminderManager: ReminderManager,
     private val tagRepository: TagRepository,
-    private val mediaStorageManager: MediaStorageManager,
+    internal val mediaStorageManager: MediaStorageManager,
     private val syncManager: SyncManager,
 ) : ViewModel() {
 
